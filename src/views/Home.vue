@@ -3,7 +3,7 @@
     <div v-for="cell in rows">
       <Cell @click="dimCell(cell)"
             @click.right="markFlag(cell)"
-            :cell="cell"><h1>{{ cell }}</h1></Cell>
+            :cell="cell"></Cell>
     </div>
   </div>
 </template>
@@ -15,7 +15,7 @@ import {CellType} from "../utils/types";
 
 const width = 8
 const height = 8
-const bombs = 10
+const bombs = 15
 
 const grid: CellType[][] = reactive([])
 
