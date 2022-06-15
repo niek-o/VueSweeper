@@ -1,6 +1,6 @@
 {
   "name": "vuesweeper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "electron/electron.js",
   "author": {
     "email": "frankenstein795@gmail.com",
@@ -28,6 +28,7 @@
     "vue-router": "4"
   },
   "devDependencies": {
+    "@babel/types": "^7.18.4",
     "@types/node": "^17.0.38",
     "@vitejs/plugin-vue": "^2.2.0",
     "autoprefixer": "^10.4.4",

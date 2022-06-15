@@ -11,7 +11,7 @@
 <style>
 @font-face {
   font-family: "cozzette-vector";
-  src: local("cozzette-vector"), url("/fonts/cozette-vector.ttf") format("truetype");
+  src: local("cozzette-vector"), url("../assets/fonts/cozette-vector.ttf") format("truetype");
 }
 
 body {
