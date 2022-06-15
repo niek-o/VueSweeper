@@ -1,7 +1,9 @@
 <template>
   <div class="flex" v-for="rows in grid">
     <div v-for="cell in rows">
-        <Cell @click="dimCell(cell)" :cell="cell"></Cell>
+      <Cell @click="dimCell(cell)"
+            @click.right="markFlag(cell)"
+            :cell="cell"><h1>{{ cell }}</h1></Cell>
     </div>
   </div>
 </template>
@@ -18,9 +20,11 @@ const bombs = 10
 const grid: CellType[][] = reactive([])
 
 function dimCell(cell: CellType) {
-  console.log(cell)
   cell.dimmed = true
-  console.log(cell)
+}
+
+function markFlag(cell: CellType) {
+  cell.flag = !cell.flag
 }
 
 function generateGrid() {
@@ -42,69 +46,60 @@ function generateGrid() {
 function generateBombs() {
   if (!grid) return
 
-  for(let i = 0; i < bombs; i++) {
+  for (let i = 0; i < bombs; i++) {
     let c: number
     let r: number
     do {
       c = getRandomNumber(0, 7)
       r = getRandomNumber(0, 7)
     }
-    while(grid[r][c].bomb) {
+    while (grid[r][c].bomb)
+    {
       grid[r][c].bomb = true
     }
   }
 }
 
 function generateNumbers() {
-  for(let i = 0; i < height; i++) {
-    for(let j = 0; j < width; j++) {
-      if(grid[i][j].bomb) {
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
+      if (grid[i][j].bomb) {
         // right cell
-        if(grid[i][j+1]) grid[i][j+1].val++
+        if (grid[i][j + 1]) grid[i][j + 1].val++
 
         // left cell
-        if(grid[i][j-1]) grid[i][j-1].val++
+        if (grid[i][j - 1]) grid[i][j - 1].val++
 
         // check bottom row
-        if(grid[i+1]) {
+        if (grid[i + 1]) {
           // bottom right cell
-          if(grid[i+1][j+1]) grid[i+1][j+1].val++
+          if (grid[i + 1][j + 1]) grid[i + 1][j + 1].val++
 
           // bottom cell
-          if(grid[i+1][j]) grid[i+1][j].val++
+          if (grid[i + 1][j]) grid[i + 1][j].val++
 
           // bottom left cell
-          if(grid[i+1][j-1]) grid[i+1][j-1].val++
+          if (grid[i + 1][j - 1]) grid[i + 1][j - 1].val++
         }
 
         // check top row
-        if(grid[i-1]) {
+        if (grid[i - 1]) {
           // top right cell
-          if(grid[i-1][j+1]) grid[i-1][j+1].val++
+          if (grid[i - 1][j + 1]) grid[i - 1][j + 1].val++
 
           // top cell
-          if(grid[i-1][j]) grid[i-1][j].val++
+          if (grid[i - 1][j]) grid[i - 1][j].val++
 
           // top left cell
-          if(grid[i-1][j-1]) grid[i-1][j-1].val++
+          if (grid[i - 1][j - 1]) grid[i - 1][j - 1].val++
         }
       }
     }
   }
 }
 
-// function getBomb(c: number, r: number) {
-//   return grid[r][c].bomb
-// }
-//
-// function getCellNumber(c: number, r: number) {
-//   if(!getBomb(c, r)) {
-//     return grid[r][c].val
-//   }
-// }
-
 function getRandomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (1+max-min)+min)
+  return Math.floor(Math.random() * (1 + max - min) + min)
 }
 
 generateGrid()
