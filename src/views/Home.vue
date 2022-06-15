@@ -20,6 +20,14 @@ const bombs = 15
 const grid: CellType[][] = reactive([])
 
 function dimCell(cell: CellType) {
+  if(cell.flag) {
+    return
+  }
+
+  if(cell.bomb) {
+    // TODO: Show all bombs when player picks one
+  }
+
   cell.dimmed = true
 }
 
