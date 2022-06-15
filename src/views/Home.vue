@@ -42,7 +42,7 @@ const moves: Ref<number> = ref(0)
 
 const grid: CellType[][] = reactive([])
 
-let cellCount: Ref<number> = ref(width * height - bombs)
+const cellCount: Ref<number> = ref(width * height - bombs)
 
 function shortDim(cell: CellType) {
   fakeDim(cell, true)
@@ -209,7 +209,7 @@ function autoClear(cell: CellType) {
 }
 
 function markFlag(cell: CellType) {
-  if (gameOver.value || cell.dimmed) return
+  if (gameOver.value || win.value || cell.dimmed) return
   if (!cell.flag) {
     flags.value -= 1
   } else {
