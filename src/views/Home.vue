@@ -25,10 +25,18 @@ function dimCell(cell: CellType) {
   }
 
   if(cell.bomb) {
-    // TODO: Show all bombs when player picks one
+    getAllBombs()
   }
 
   cell.dimmed = true
+}
+
+function getAllBombs() {
+  grid.forEach(row => {
+    row.forEach(cell => {
+      if(cell.bomb) cell.dimmed = true;
+    })
+  })
 }
 
 function markFlag(cell: CellType) {
