@@ -15,7 +15,7 @@ import {CellType} from "../utils/types";
 
 const width = 8
 const height = 8
-const bombs = 15
+const bombs = 10
 
 const gameOver: Ref<boolean> = ref(false)
 
@@ -31,19 +31,31 @@ function dimCell(cell: CellType) {
   }
 
   if(cell.bomb) {
-    getAllBombs()
+    dimAllBombs()
     gameOver.value = true
   }
 
   cell.dimmed = true
+
+  // Autoclear tiles
+  if(cell.val === 0) {
+    autoClear(cell)
+  }
 }
 
-function getAllBombs() {
+function dimAllBombs() {
   grid.forEach(row => {
     row.forEach(cell => {
       if(cell.bomb) cell.dimmed = true;
     })
   })
+}
+
+function autoClear(cell: CellType) {
+  if(grid[cell.row][cell.col+1] && !grid[cell.row][cell.col+1].dimmed) dimCell(grid[cell.row][cell.col+1]) // right
+  if(grid[cell.row][cell.col-1] && !grid[cell.row][cell.col-1].dimmed) dimCell(grid[cell.row][cell.col-1]) // left
+  if (grid[cell.row-1] && !grid[cell.row-1][cell.col].dimmed) dimCell(grid[cell.row-1][cell.col]) // top
+  if (grid[cell.row+1] && !grid[cell.row+1][cell.col].dimmed) dimCell(grid[cell.row+1][cell.col]) // bottom
 }
 
 function markFlag(cell: CellType) {
@@ -60,6 +72,8 @@ function generateGrid() {
         val: 0,
         flag: false,
         dimmed: false,
+        row: i,
+        col: j,
       });
     }
     grid.push(row);
@@ -87,34 +101,19 @@ function generateNumbers() {
   for (let i = 0; i < height; i++) {
     for (let j = 0; j < width; j++) {
       if (grid[i][j].bomb) {
-        // right cell
-        if (grid[i][j + 1]) grid[i][j + 1].val++
+        if (grid[i][j + 1]) grid[i][j + 1].val++ // right cell
+        if (grid[i][j - 1]) grid[i][j - 1].val++ // left cell
 
-        // left cell
-        if (grid[i][j - 1]) grid[i][j - 1].val++
-
-        // check bottom row
-        if (grid[i + 1]) {
-          // bottom right cell
-          if (grid[i + 1][j + 1]) grid[i + 1][j + 1].val++
-
-          // bottom cell
-          if (grid[i + 1][j]) grid[i + 1][j].val++
-
-          // bottom left cell
-          if (grid[i + 1][j - 1]) grid[i + 1][j - 1].val++
+        if (grid[i + 1]) { // check bottom row
+          if (grid[i + 1][j + 1]) grid[i + 1][j + 1].val++ // bottom right cell
+          if (grid[i + 1][j]) grid[i + 1][j].val++ // bottom cell
+          if (grid[i + 1][j - 1]) grid[i + 1][j - 1].val++ // bottom left cell
         }
 
-        // check top row
-        if (grid[i - 1]) {
-          // top right cell
-          if (grid[i - 1][j + 1]) grid[i - 1][j + 1].val++
-
-          // top cell
-          if (grid[i - 1][j]) grid[i - 1][j].val++
-
-          // top left cell
-          if (grid[i - 1][j - 1]) grid[i - 1][j - 1].val++
+        if (grid[i - 1]) { // check top row
+          if (grid[i - 1][j + 1]) grid[i - 1][j + 1].val++ // top right cell
+          if (grid[i - 1][j]) grid[i - 1][j].val++ // top cell
+          if (grid[i - 1][j - 1]) grid[i - 1][j - 1].val++ // top left cell
         }
       }
     }
