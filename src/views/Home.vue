@@ -10,22 +10,29 @@
 
 <script setup lang="ts">
 import Cell from "../components/Cell.vue"
-import {reactive} from "vue";
+import {reactive, Ref, ref} from "vue";
 import {CellType} from "../utils/types";
 
 const width = 8
 const height = 8
 const bombs = 15
 
+const gameOver: Ref<boolean> = ref(false)
+
 const grid: CellType[][] = reactive([])
 
 function dimCell(cell: CellType) {
+  if(gameOver.value) {
+    return
+  }
+
   if(cell.flag) {
     return
   }
 
   if(cell.bomb) {
     getAllBombs()
+    gameOver.value = true
   }
 
   cell.dimmed = true
