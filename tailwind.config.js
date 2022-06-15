@@ -6,7 +6,8 @@ module.exports = {
             "cell": "var(--cell)",
             "borderDark": "var(--borderDark)",
             "borderLight": "var(--borderLight)",
-            "bg": "var(--bg)",
+            "red": "var(--red)",
+            "darkRed": "var(--darkRed)",
         },
         extend: {
             borderWidth: {

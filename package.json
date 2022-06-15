@@ -1,6 +1,6 @@
 {
   "name": "vuesweeper",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "electron/electron.js",
   "author": {
     "email": "frankenstein795@gmail.com",

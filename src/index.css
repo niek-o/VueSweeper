@@ -6,9 +6,8 @@
     --cell: #C0C0C0;
     --borderDark: #808080;
     --borderLight: #FFFFFF;
-    --text: #525252;
-    --white: #FFFFFF;
-    --black: #000000;
+    --red: #FF0000;
+    --darkRed: #400000;
 
     /*Number colors*/
     --1: #4500FF;
@@ -20,13 +19,6 @@
     --7: #000000;
     --8: #808080;
 }
-
-/**, *::after, *::before {*/
-/*    -webkit-user-select: none;*/
-/*    -webkit-user-drag: none;*/
-/*    -webkit-app-region: no-drag;*/
-/*    cursor: default;*/
-/*}*/
 
 .non-drag {
     -webkit-user-select: none;
