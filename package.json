@@ -1,0 +1,75 @@
+{
+  "name": "vuesweeper",
+  "version": "0.0.1",
+  "main": "electron/electron.js",
+  "author": {
+    "email": "frankenstein795@gmail.com",
+    "name": "Niek",
+    "url": "https://github.com/niek-o"
+  },
+  "repository": {
+    "url": "https://github.com/niek-o/VueSweeper"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "electron": "cross-env IS_DEV=true electron .",
+    "electron:pack": "electron-builder --dir",
+    "electron:dev": "concurrently -k \"cross-env BROWSER=none yarn dev --host\" \"yarn electron\"",
+    "electron:builder:win": "electron-builder -w",
+    "electron:builder:deb": "electron-builder -l",
+    "build:for:electron": "vue-tsc --noEmit && cross-env ELECTRON=true vite build",
+    "app:build": "yarn build:for:electron && yarn electron:builder:win && yarn electron:builder:deb"
+  },
+  "dependencies": {
+    "@vueuse/core": "^8.2.6",
+    "vue": "^3.2.25",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.38",
+    "@vitejs/plugin-vue": "^2.2.0",
+    "autoprefixer": "^10.4.4",
+    "concurrently": "^7.2.1",
+    "cross-env": "^7.0.3",
+    "electron": "^19.0.2",
+    "electron-builder": "^23.0.3",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-vue": "^9.1.0",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.23",
+    "typescript": "^4.7.2",
+    "vite": "^2.8.0",
+    "vue-tsc": "^0.35.2"
+  },
+  "build": {
+    "appId": "com.vuesweeper.app",
+    "productName": "VueSweeper",
+    "copyright": "Copyright © 2022 ${author}",
+    "mac": {
+      "category": "public.vuesweeper.app"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": ""
+    },
+    "linux": {
+      "target": "deb",
+      "icon": ""
+    },
+    "deb": {},
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist_electron"
+    }
+  }
+}
