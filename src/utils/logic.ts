@@ -16,17 +16,17 @@ export class Game {
     public moves: number = 0
 
     constructor(width: number, height: number, bombs: number) {
+        this.initGame(width, height, bombs)
+    }
+
+    initGame(width: number, height: number, bombs: number) {
+        this.clearOld()
+
         this.width = width
         this.height = height
         this.bombs = bombs
         this.flags = bombs
         this.cellCount = (width * height) - bombs
-
-        this.initGame()
-    }
-
-    initGame() {
-        this.clearOld()
 
         this.generateGrid()
     }
@@ -98,8 +98,6 @@ export class Game {
         if (this.cellCount === 0) {
             this.win = true
         }
-
-        console.log(this.moves)
     }
 
     markFlag(cell: CellType) {

@@ -4,7 +4,7 @@
       <h1 class="text-center text-4xl border-4 border-red text-red bg-darkRed w-48 h-12">{{ game.flags }}</h1>
       <button
           class="w-48 text-4xl bg-cell border-4 border-t-borderLight border-l-borderLight border-b-borderDark border-r-borderDark h-12"
-          @click="game.initGame()">Restart
+          @click="game.initGame(width, height, bombs)">Restart
       </button>
     </div>
     <div>
@@ -26,6 +26,7 @@
 <script setup lang="ts">
 import Cell from "../components/Cell.vue"
 import {Game} from "../utils/logic";
+import {computed} from "vue";
 
 const props = defineProps<{
   width: number,
@@ -33,7 +34,11 @@ const props = defineProps<{
   bombs: number,
 }>()
 
-const game = new Game(props.width, props.height, props.bombs)
+const width = computed(() => props.width)
+const height = computed(() => props.height)
+const bombs = computed(() => props.bombs)
+
+const game = new Game(width.value, height.value, bombs.value)
 
 const grid = game.grid
 </script>
