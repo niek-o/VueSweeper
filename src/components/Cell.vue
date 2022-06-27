@@ -1,11 +1,9 @@
 <template>
   <div class="flex w-12 h-12 text-3xl font-bold place-items-center justify-center inline-block"
-       :class="dimmed || fakeDimmed ? 'cellDimmed' : 'cellLit'">
+      :class="dimmed || fakeDimmed ? 'cellDimmed' : 'cellLit'">
     <h1 v-if="!bomb && dimmed && val > 0" class="number non-drag">{{ val }}</h1>
-    <img alt="bomb" v-if="bomb && dimmed" class="h-8 w-auto non-drag" src="/assets/img/bomb.png"> <img alt="flag"
-                                                                                                       v-if="flag && !dimmed"
-                                                                                                       class="h-8 w-auto non-drag"
-                                                                                                       src="/assets/img/flag.png">
+    <img alt="bomb" v-if="bomb && dimmed" class="h-8 w-auto non-drag" src="/assets/img/bomb.png">
+    <img alt="flag" v-if="flag && !dimmed" class="h-8 w-auto non-drag" src="/assets/img/flag.png">
   </div>
 </template>
 

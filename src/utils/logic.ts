@@ -20,6 +20,8 @@ export class Game {
 	initGame(width: number, height: number, bombs: number) {
 		this.clearOld();
 		
+		if (bombs >= width * height || width === 0 || height === 0 || bombs === 0) return;
+		
 		this._width      = width;
 		this._height     = height;
 		this._bombs      = bombs;

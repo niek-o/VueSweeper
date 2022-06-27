@@ -3,7 +3,7 @@
     <div class="flex flex-row non-drag">
       <h1 class="text-center text-4xl border-4 border-red text-red bg-darkRed w-48 h-12">{{ flags }}</h1>
       <button class="w-48 text-4xl bg-cell border-4 border-t-borderLight border-l-borderLight border-b-borderDark border-r-borderDark h-12"
-              @click="game.initGame(width, height, bombs)">Restart
+          @click="game.initGame(width, height, bombs)">Restart
       </button>
     </div>
     <div>
