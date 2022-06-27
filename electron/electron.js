@@ -16,7 +16,7 @@ function createWindow() {
         frame: true,
         width: 800,
         height: 600,
-        // icon: __dirname + ''
+        icon: __dirname + '/vuesweeper.png'
     });
 
     // and load the index.html of the app.

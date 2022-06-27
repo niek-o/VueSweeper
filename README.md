@@ -1,6 +1,9 @@
+<img align="right" alt="LOGO" src="electron/vuesweeper.png" width="256" height="256">
+
 # VueSweeper
 
 A minesweeper clone made in Vue-3, Typescript and Tailwind.
+
 
 ---
 
