@@ -1,19 +1,17 @@
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {CellType} from "./types";
 import {getRandomNumber} from "./getRandomNumber";
 
 export class Game {
-    public width: number = 0
-    public height: number = 0
-    public bombs: number = 0
-    public flags: number = 0
-    public cellCount: number = 0
-    public grid: CellType[][] = reactive([])
-
-    public gameOver: boolean = false
-    public win: boolean = false
-
-    public moves: number = 0
+    public readonly gameOver = ref<boolean>(false)
+    public readonly win = ref<boolean>(false)
+    public readonly flags = ref<number>(0)
+    public readonly grid: CellType[][] = reactive([])
+    private _bombs: number = 0
+    private _width: number = 0
+    private _height: number = 0
+    private _cellCount: number = 0
+    private _moves: number = 0
 
     constructor(width: number, height: number, bombs: number) {
         this.initGame(width, height, bombs)
@@ -22,11 +20,11 @@ export class Game {
     initGame(width: number, height: number, bombs: number) {
         this.clearOld()
 
-        this.width = width
-        this.height = height
-        this.bombs = bombs
-        this.flags = bombs
-        this.cellCount = (width * height) - bombs
+        this._width = width
+        this._height = height
+        this._bombs = bombs
+        this.flags.value = bombs
+        this._cellCount = (width * height) - bombs
 
         this.generateGrid()
     }
@@ -34,17 +32,17 @@ export class Game {
     clearOld() {
         if (this.grid.length ! > 0) {
             this.grid.length = 0
-            this.moves = 0
-            this.gameOver = false
-            this.win = false
+            this._moves = 0
+            this.gameOver.value = false
+            this.win.value = false
         }
     }
 
     generateGrid() {
-        for (let i = 0; i < this.height; i++) {
+        for (let i = 0; i < this._height; i++) {
             const row: CellType[] = [];
 
-            for (let j = 0; j < this.width; j++) {
+            for (let j = 0; j < this._width; j++) {
                 row.push({
                     bomb: false,
                     val: 0,
@@ -60,7 +58,7 @@ export class Game {
     }
 
     clickCell(cell: CellType) {
-        if (this.moves === 0) {
+        if (this._moves === 0) {
             this.grid[cell.row][cell.col].bomb = true
             this.generateBombs()
             this.grid[cell.row][cell.col].bomb = false
@@ -71,17 +69,17 @@ export class Game {
             return
         }
 
-        if (this.gameOver || this.win) {
+        if (this.gameOver.value || this.win.value) {
             return
         }
 
         if (cell.bomb) {
             this.dimAllBombs()
-            this.gameOver = true
+            this.gameOver.value = true
         }
 
         if (!cell.dimmed) {
-            this.cellCount -= 1
+            this._cellCount -= 1
         }
 
         if (cell.dimmed) {
@@ -89,23 +87,23 @@ export class Game {
         }
 
         cell.dimmed = true
-        this.moves++
+        this._moves++
 
         if (cell.val === 0) {
             this.autoClear(cell)
         }
 
-        if (this.cellCount === 0) {
-            this.win = true
+        if (this._cellCount === 0) {
+            this.win.value = true
         }
     }
 
     markFlag(cell: CellType) {
-        if (this.gameOver || this.win || cell.dimmed) return
+        if (this.gameOver.value || this.win.value || cell.dimmed) return
         if (!cell.flag) {
-            this.flags -= 1
+            this.flags.value -= 1
         } else {
-            this.flags += 1
+            this.flags.value += 1
         }
 
         cell.flag = !cell.flag
@@ -114,23 +112,22 @@ export class Game {
     generateBombs() {
         if (!this.grid) return
 
-        for (let i = 0; i < this.bombs; i++) {
+        for (let i = 0; i < this._bombs; i++) {
             let c: number
             let r: number
             do {
-                r = getRandomNumber(0, this.height - 1)
-                c = getRandomNumber(0, this.width - 1)
+                r = getRandomNumber(0, this._height - 1)
+                c = getRandomNumber(0, this._width - 1)
             }
             while (this.grid[r][c].bomb)
-            {
-                this.grid[r][c].bomb = true
-            }
+
+            this.grid[r][c].bomb = true
         }
     }
 
     generateNumbers() {
-        for (let i = 0; i < this.height; i++) {
-            for (let j = 0; j < this.width; j++) {
+        for (let i = 0; i < this._height; i++) {
+            for (let j = 0; j < this._width; j++) {
                 if (this.grid[i][j].bomb) {
                     const {r, l, br, b, bl, tr, t, tl} = this.getAdjacentTiles(this.grid[i][j])
 
