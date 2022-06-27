@@ -245,8 +245,8 @@ function generateBombs(width: number, height: number, bombs: number) {
     let c: number
     let r: number
     do {
-      c = getRandomNumber(0, height - 1)
-      r = getRandomNumber(0, width - 1)
+      r = getRandomNumber(0, height - 1)
+      c = getRandomNumber(0, width - 1)
     }
     while (grid[r][c].bomb)
     {
